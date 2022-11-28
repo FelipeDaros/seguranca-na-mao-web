@@ -18,70 +18,115 @@ type Alert = {
   created_at: string;
 }
 
+
+type Location = {
+  id: string;
+  latitude: string;
+  longitude: string;
+  date: string;
+  user_id: {
+    id: string;
+    name: string;
+  }
+}
+
 export function Home(){
   const [data, setData] = useState<Alert[]>([]);
+  const [location, setLocation] = useState<Location[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  async function handleAction(){
+  async function alertAction(){
+    setLoading(true)
     await axios.get("https://backend-seguranca.herokuapp.com/api/alert").then((response) => {
     setData(response.data);
+  }).finally(() => setLoading(false));
+  }
 
-    data.map(result => {
-      console.log(result.user_id.name);
-    })
-  })
+  async function locationAction(){
+    setLoading(true)
+    try {
+      await axios.get("https://backend-seguranca.herokuapp.com/api/location").then((response) => {
+        setLocation(response.data);
+      }).finally(() => setLoading(false));
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
-    handleAction();
+    alertAction();
+    locationAction();
   }, [])
 
   return(
     <>
       <Header />
+      {!loading ? 
       <Container>
-        <Button onClick={handleAction}>APERTE</Button>
         <Row style={{marginTop: 50}}>
-
-        
           <Col style={{marginRight: 10, borderRadius: 2}}>
+            <h3>Alerta Vigia</h3>
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Nome</th>
                   <th>Data</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  
+                  {
+                    data.map(alerta => {
+                      return(
+                        <>
+                          <td>{alerta.user_id.name}</td>
+                          <td key={alerta.created_at}>{alerta.created_at}</td>
+                        </>
+                      )
+                    })
+                  }
                 </tr>
               </tbody>
             </Table>
           </Col>
 
 
-          <Col style={{borderRadius: 2}}>
-          <Table striped bordered hover>
+          <Col style={{marginRight: 10, borderRadius: 2}}>
+            <h3>Localização</h3>
+            <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Nome</th>
                   <th>Data</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>LINK</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
+                {
+                  location.map(location => {
+                    return(
+                      <>
+                        <td>{location.user_id.name}</td>
+                        <td key={location.date}>{location.date}</td>
+                        <td>{location.latitude}</td>
+                        <td>{location.longitude}</td>
+                        <td>LINK</td>
+                      </>
+                      )
+                    })
+                  }
                 </tr>
               </tbody>
             </Table>
           </Col>
         </Row>
-        
       </Container>
+      :
+      <Loading />
+      }
     </>
   )
 }

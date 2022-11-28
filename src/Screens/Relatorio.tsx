@@ -1,9 +1,10 @@
+import { Header } from "../Components/Header";
 
 
 export function Relatorio(){
   return(
     <>
-      <span>Relatório</span>
+      <Header />
     </>
   )
 }

@@ -8,7 +8,7 @@ import { Loading } from './Components/Loading';
 function App() {
   const [loading, setLoading] = useState(false);
   return (
-    <Router>
+    <Router >
       {loading ? <Loading /> : <IndexRoutes />}
     </Router>
   );
