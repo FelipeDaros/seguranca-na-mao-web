@@ -7,7 +7,7 @@ import { Relatorio } from "../Screens/Relatorio"
 
 export default function IndexRoutes(){
   return(
-    <MainRoutes>
+    <MainRoutes location="/home">
       <Route path="/home" element={<Home />}/>
       <Route path="/relatorio" element={<Relatorio />}/>
       <Route path="/cadastro" element={<Cadastro />}/>
