@@ -1,0 +1,19 @@
+/* Estilo para o container principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  /* 100% da altura da tela */
+}
+
+/* Estilo para espaçamento entre os campos */
+.form-field {
+  margin-bottom: 20px;
+  width: 20%;
+}
+
+.text-font {
+  text-align: center;
+}
