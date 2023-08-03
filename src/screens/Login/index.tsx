@@ -13,8 +13,11 @@ export function Login() {
         try {
             setLoading(true);
             await signIn(nome, senha);
-        } catch (error) {
+            toaster.success("Login efetuado com sucesso!");
+            return;
+        } catch (error: any) {
             toaster.danger("Erro ao efetuar o login");
+            return;
         }finally{
             setLoading(false);
         }

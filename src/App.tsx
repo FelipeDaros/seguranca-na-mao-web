@@ -1,13 +1,15 @@
-import { useState } from 'react'
 import { AuthContextProvider } from './context/AuthContext'
-import { Login } from './screens/Login'
+import { BrowserRouter } from 'react-router-dom'
+import { Router } from './routes/Router'
+import "./styles/index.css"
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <AuthContextProvider>
-      <Login />
+    <AuthContextProvider >
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </AuthContextProvider>
   )
 }
