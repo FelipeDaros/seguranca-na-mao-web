@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { api } from "../../config/apit"
 import { Table, toaster, Button, Heading } from "evergreen-ui";
-import pdf from "pdfmake";
 
 export function Pontos() {
     const [pontos, setPontos] = useState([]);
@@ -59,7 +58,7 @@ export function Pontos() {
                             <Table.Row key={ponto.id}>
                                 <Table.TextCell textAlign="center">{ponto.id}</Table.TextCell>
                                 <Table.TextCell textAlign="center">{ponto.nome}</Table.TextCell>
-                                <Table.TextCell textAlign="center"><Button intent="success" onClick={() => imprimirPonto(ponto.id)}>Imprimir</Button></Table.TextCell>
+                                <Table.TextCell textAlign="center"><Button isLoading={loading} intent="success" onClick={() => imprimirPonto(ponto.id)}>Imprimir</Button></Table.TextCell>
                             </Table.Row>
                         ))}
                     </Table.VirtualBody>

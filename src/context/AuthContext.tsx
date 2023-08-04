@@ -13,7 +13,7 @@ const AuthContext = createContext<AuthContextDataProps>(
   {} as AuthContextDataProps
 );
 
-const AuthContextProvider: React.FC = ({ children }) => {
+const AuthContextProvider: React.FC = ({ children }: any) => {
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const AuthContextProvider: React.FC = ({ children }) => {
   async function handleChecked() {
     const storagedUser = localStorage.getItem("@SEGMAO:user");
 
-    const userParsed: IUser = JSON.parse(storagedUser);
+    const userParsed: IUser = JSON.parse(storagedUser as any);
 
     userParsed.isChecked = true;
 

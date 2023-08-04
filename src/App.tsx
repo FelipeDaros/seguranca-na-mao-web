@@ -6,11 +6,11 @@ import "./styles/index.css"
 function App() {
 
   return (
-    <AuthContextProvider >
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthContextProvider>
         <Router />
-      </BrowserRouter>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   )
 }
 

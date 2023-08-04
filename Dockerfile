@@ -7,6 +7,9 @@ RUN npm install -g npm@8.19.4
 # Definir o diretório de trabalho dentro do container
 WORKDIR /app
 
+# Instalar o Nano
+RUN apt-get update && apt-get install -y nano
+
 # Copiar package.json e package-lock.json para aproveitar o cache de dependências
 COPY package*.json ./
 
@@ -20,14 +23,15 @@ COPY . .
 RUN npm run build
 
 # Estágio 2: Configuração do Nginx
-FROM nginx:alpine
+FROM nginx:latest
 
-# Copia os arquivos estáticos do Vue.js da etapa de construção do Node.js
-COPY ./build /usr/share/nginx/html
+
+COPY ./dist /usr/share/nginx/html
 
 # Expõe a porta 80
 EXPOSE 80
 
 # Executa o Nginx em primeiro plano
 CMD ["nginx", "-g", "daemon off;"]
+
 
