@@ -67,8 +67,6 @@ const AuthContextProvider: React.FC = ({ children }: any) => {
 
       return;
     } catch (error) {
-      console.log("AQUI")
-      // Replace this with a web-based notification system or modal component
       return error;
     }
   }

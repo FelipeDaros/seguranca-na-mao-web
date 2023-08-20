@@ -10,6 +10,11 @@ export function Login() {
     const [loading, setLoading] = useState(false);
 
     async function handleLogin(){
+        if(!nome || !senha){
+            toaster.warning('Usuário e senha são obrigatórios');
+            return;
+        }
+
         try {
             setLoading(true);
             await signIn(nome, senha);
