@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "../interfaces/IUser";
-import { api } from "../config/apit";
+import { api } from "../config/api";
 
 type AuthContextDataProps = {
   user: IUser | null;

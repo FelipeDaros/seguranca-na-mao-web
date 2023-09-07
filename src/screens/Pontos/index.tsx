@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { api } from "../../config/apit"
+import { api } from "../../config/api"
 import { Table, toaster, Button, Heading } from "evergreen-ui";
 
 export function Pontos() {
