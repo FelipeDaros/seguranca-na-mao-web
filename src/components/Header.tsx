@@ -10,6 +10,7 @@ export function Header() {
             <ul className="list">
                 <NavLink className="fontNav" to="/">Home</NavLink>
                 <NavLink className="fontNav" to="/pontos">Pontos</NavLink>
+                <NavLink className="fontNav" to="/panico">Pânico</NavLink>
                 <NavLink className="fontNav" to="/" onClick={signOut}>Sair</NavLink>
             </ul>
         </nav>

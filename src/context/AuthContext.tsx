@@ -66,8 +66,8 @@ const AuthContextProvider: React.FC = ({ children }: any) => {
       }
 
       return;
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      throw new Error(error);
     }
   }
 

@@ -14,7 +14,6 @@ export function Login() {
             toaster.warning('Usuário e senha são obrigatórios');
             return;
         }
-
         try {
             setLoading(true);
             await signIn(nome, senha);
