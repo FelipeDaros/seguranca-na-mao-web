@@ -20,6 +20,7 @@ export function Login() {
             toaster.success("Login efetuado com sucesso!");
             return;
         } catch (error: any) {
+            console.log(error)
             toaster.danger("Erro ao efetuar o login");
             return;
         }finally{

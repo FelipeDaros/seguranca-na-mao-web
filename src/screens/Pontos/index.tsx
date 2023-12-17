@@ -1,10 +1,38 @@
-import { useEffect, useState } from "react"
-import { api } from "../../config/api"
-import { Table, toaster, Button, Heading } from "evergreen-ui";
+import { useEffect, useState } from "react";
+import { api } from "../../config/api";
+import { toaster, Heading } from "evergreen-ui";
+import { Space, Table, Button } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+
+interface DataType {
+    id: number;
+    nome: string;
+}
 
 export function Pontos() {
     const [pontos, setPontos] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const columns: ColumnsType<DataType> = [
+        {
+            title: 'Código',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: 'Nome',
+            dataIndex: 'nome',
+            key: 'nome',
+        },
+        {
+            title: 'Download',
+            dataIndex: 'id',
+            key: 'download', // Adicionada chave única para esta coluna
+            render: (item, index) => (
+                <Button type="primary" size="small" onClick={() => imprimirPonto(item)}>Gerar</Button>
+            ),
+        },
+    ];
 
     async function fetchPontos() {
         try {
@@ -14,23 +42,20 @@ export function Pontos() {
         } catch (error) {
             toaster.danger('Erro ao buscar os pontos');
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 
     async function imprimirPonto(value: any) {
         try {
             const { data } = await api.post(`/ponto/imprimir/${value}`, {}, {
-                responseType: 'blob', // Fix typo in 'responseType'
+                responseType: 'blob',
                 headers: {
-                    'Content-Type': 'application/pdf'
-                }
+                    'Content-Type': 'application/pdf',
+                },
             });
-    
-            // Create a Blob from the response data
+
             const blob = new Blob([data], { type: 'application/pdf' });
-    
-            // Create a URL for the Blob and open it in a new window or tab
             const pdfUrl = URL.createObjectURL(blob);
             window.open(pdfUrl, '_blank');
         } catch (error) {
@@ -41,29 +66,11 @@ export function Pontos() {
 
     useEffect(() => {
         fetchPontos();
-    }, [])
+    }, []);
 
     return (
         <div>
-            <Heading size={800} style={{textAlign: 'center', marginTop: 20}}>Pontos</Heading>
-            <div className="container">
-                <Table style={{ width: "60rem" }}>
-                    <Table.Head>
-                        <Table.TextHeaderCell textAlign="center">Identificador</Table.TextHeaderCell>
-                        <Table.TextHeaderCell textAlign="center">Nome</Table.TextHeaderCell>
-                        <Table.TextHeaderCell textAlign="center">Abrir</Table.TextHeaderCell>
-                    </Table.Head>
-                    <Table.VirtualBody height={400} maxHeight={400}>
-                        {pontos.map((ponto: any) => (
-                            <Table.Row key={ponto.id}>
-                                <Table.TextCell textAlign="center">{ponto.id}</Table.TextCell>
-                                <Table.TextCell textAlign="center">{ponto.nome}</Table.TextCell>
-                                <Table.TextCell textAlign="center"><Button isLoading={loading} intent="success" onClick={() => imprimirPonto(ponto.id)}>Imprimir</Button></Table.TextCell>
-                            </Table.Row>
-                        ))}
-                    </Table.VirtualBody>
-                </Table>
-            </div>
+            <Table loading={loading} columns={columns} dataSource={pontos} rowKey="id" />
         </div>
-    )
+    );
 }

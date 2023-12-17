@@ -15,9 +15,11 @@ const AuthContext = createContext<AuthContextDataProps>(
 
 const AuthContextProvider: React.FC = ({ children }: any) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadStoragedData() {
+      setLoading(true);
       const storagedUser = localStorage.getItem("@SEGMAO:user");
 
       if (storagedUser) {
@@ -25,6 +27,7 @@ const AuthContextProvider: React.FC = ({ children }: any) => {
         api.defaults.headers["Authorization"] = `Bearer ${userParsed.token}`;
         setUser(userParsed);
       }
+      setLoading(false);
     }
 
     loadStoragedData();
@@ -70,6 +73,8 @@ const AuthContextProvider: React.FC = ({ children }: any) => {
       throw new Error(error);
     }
   }
+
+  if(loading) return <p>Loading..</p>
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut, handleChecked }}>
